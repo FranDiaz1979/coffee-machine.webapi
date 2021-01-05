@@ -4,6 +4,8 @@ namespace entities
 {
     public class Order
     {
+        public int Id { get; }
+
         public string DrinkType { get; set; }
 
         //public float Money { get; set; }
