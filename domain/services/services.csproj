@@ -8,9 +8,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\data\repositories\repositories.csproj" />
-    <ProjectReference Include="..\..\data\entities\entities.csproj" />
-    <ProjectReference Include="..\models\models.csproj" />
+    <ProjectReference Include="..\..\data\repositories\Repositories.csproj" />
+    <ProjectReference Include="..\..\data\entities\Entities.csproj" />
+    <ProjectReference Include="..\models\Models.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

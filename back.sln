@@ -1,27 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{A43C750E-E267-474B-B91A-E25372D25C95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "entities", "data\entities\entities.csproj", "{4615A9F9-8B61-45A3-9B85-B327E0A82E10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "data\entities\Entities.csproj", "{4615A9F9-8B61-45A3-9B85-B327E0A82E10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "repositories", "data\repositories\repositories.csproj", "{EB6694A7-18CD-4052-B51A-26BFF608EF7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "data\repositories\Repositories.csproj", "{EB6694A7-18CD-4052-B51A-26BFF608EF7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{34BD247B-D209-431B-AB27-357B8A48C399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "models", "domain\models\models.csproj", "{B14FDE97-18FD-4B91-9113-A35E0CADF035}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "domain\models\Models.csproj", "{B14FDE97-18FD-4B91-9113-A35E0CADF035}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "services", "domain\services\services.csproj", "{332B16B8-C588-4C72-9A93-BE874B8E19D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "domain\services\Services.csproj", "{332B16B8-C588-4C72-9A93-BE874B8E19D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{4E5A8446-52B0-48D7-A5A8-9C0EE18DF212}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapi", "api\webapi\webapi.csproj", "{D94EE2A0-877F-41C3-B3DC-2E0FBF5389F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "api\webapi\WebApi.csproj", "{D94EE2A0-877F-41C3-B3DC-2E0FBF5389F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A8E56680-D067-4481-91C7-FD901917C2E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests-domain", "tests\tests-domain\tests-domain.csproj", "{2EFADE75-75F0-4368-B52D-BA7490A9CDCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests-domain", "tests\tests-domain\tests-domain.csproj", "{2EFADE75-75F0-4368-B52D-BA7490A9CDCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,9 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4615A9F9-8B61-45A3-9B85-B327E0A82E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -109,6 +106,9 @@ Global
 		{2EFADE75-75F0-4368-B52D-BA7490A9CDCC}.Release|x86.ActiveCfg = Release|Any CPU
 		{2EFADE75-75F0-4368-B52D-BA7490A9CDCC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4615A9F9-8B61-45A3-9B85-B327E0A82E10} = {A43C750E-E267-474B-B91A-E25372D25C95}
 		{EB6694A7-18CD-4052-B51A-26BFF608EF7B} = {A43C750E-E267-474B-B91A-E25372D25C95}
@@ -116,5 +116,8 @@ Global
 		{332B16B8-C588-4C72-9A93-BE874B8E19D4} = {34BD247B-D209-431B-AB27-357B8A48C399}
 		{D94EE2A0-877F-41C3-B3DC-2E0FBF5389F9} = {4E5A8446-52B0-48D7-A5A8-9C0EE18DF212}
 		{2EFADE75-75F0-4368-B52D-BA7490A9CDCC} = {A8E56680-D067-4481-91C7-FD901917C2E0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0D413EA-3305-429D-B020-81B3CE275CB3}
 	EndGlobalSection
 EndGlobal

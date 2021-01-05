@@ -1,9 +1,9 @@
-namespace webapi.Controllers
+namespace WebApi.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using models;
-    using services;
+    using Models;
+    using Services;
     using System.Collections.Generic;
 
     [ApiController]
@@ -14,7 +14,7 @@ namespace webapi.Controllers
 
         public DrinkController(ILogger<DrinkController> logger)
         {
-            _logger = logger;
+            this._logger = logger;
         }
 
         [HttpGet]
@@ -29,7 +29,14 @@ namespace webapi.Controllers
         public string Post(string drinkType, float money, int sugars, int extraHot)
         {
             var drinkService = new DrinkService();
-            var result = drinkService.Pedir(drinkType, money, sugars, extraHot);
+            var drink = new Drink
+            {
+                DrinkType = drinkType,
+                Money = money,
+                Sugars = sugars,
+                ExtraHot = extraHot,
+            };
+            var result = drinkService.Pedir(drink);
             return result;
         }
     }

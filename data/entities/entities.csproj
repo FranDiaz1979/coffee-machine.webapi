@@ -11,4 +11,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="StyleCop.Cache">
+      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </None>
+  </ItemGroup>
+
 </Project>

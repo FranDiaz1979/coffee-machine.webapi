@@ -1,20 +1,19 @@
-﻿namespace services
+﻿namespace Services
 {
-    using System;
+    using Models;
+    using Repositories;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using models;
-    using repositories;
 
-    //TODO: Quitar magic strings
+    // TODO: Quitar magic strings
     public class DrinkService
     {
-        List<DrinkPrice> drinkPrices = new List<DrinkPrice>
+        private readonly List<DrinkPrice> drinkPrices = new List<DrinkPrice>
         {
-            new DrinkPrice{ Price = 0.4F, Name = "Tea" },
-            new DrinkPrice{ Price = 0.5F, Name = "Coffee" },
-            new DrinkPrice{ Price = 0.6F, Name = "Chocolate" },
+            new DrinkPrice { Price = 0.4F, Name = "Tea" },
+            new DrinkPrice { Price = 0.5F, Name = "Coffee" },
+            new DrinkPrice { Price = 0.6F, Name = "Chocolate" },
         };
 
         public IEnumerable<Drink> ReadAll()
@@ -26,8 +25,8 @@
             {
                 var drink = new Drink
                 {
-                    DrinkType = drinkPrices.Where(x => x.Name == order.DrinkType).Single().Name,
-                    Money = drinkPrices.Where(x => x.Name == order.DrinkType).Single().Price,
+                    DrinkType = this.drinkPrices.Single(x => x.Name == order.DrinkType).Name,
+                    Money = this.drinkPrices.Single(x => x.Name == order.DrinkType).Price,
                     Sugars = order.Sugars,
                     ExtraHot = order.ExtraHot,
                 };
@@ -35,43 +34,44 @@
             }
         }
 
-        public string Pedir(string drinkType, float money, int sugars, int extraHot)
+        public string Pedir(Drink drink)
         {
-            if (!ComprobarQueExisteBebida(drinkType))
+            if (!this.ComprobarQueExisteBebida(drink.DrinkType))
             {
                 return "The drink type should be tea, coffee or chocolate.";
             }
 
-            if (!ComprobarQueHayaSuficienteDinero(drinkType, money))
+            if (!this.ComprobarQueHayaSuficienteDinero(drink.DrinkType, drink.Money))
             {
-                return String.Format("The {0} costs {1}.",
-                    drinkPrices.Where(x => x.Name.ToLower() == drinkType.ToLower()).Single().Name,
-                    drinkPrices.Where(x => x.Name.ToLower() == drinkType.ToLower()).Single().Price.ToString("N", new CultureInfo("en-US")));
+                return string.Format(
+                    "The {0} costs {1}.",
+                    this.drinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Name,
+                    this.drinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Price.ToString("N", new CultureInfo("en-US")));
             }
 
-            if (!ComprobarAzucarillos(sugars))
+            if (!ComprobarAzucarillos(drink.Sugars))
             {
                 return "The number of sugars should be between 0 and 2.";
             }
 
-            //TODO: OrderRepository.Add(...);
+            //// TODO: OrderRepository.Add(...);
 
-            return GenerarFraseSalida(drinkType, extraHot, sugars);
+            return GenerarFraseSalida(drink);
         }
 
-        private static string GenerarFraseSalida(string drinkType, int extraHot, int sugars)
+        private static string GenerarFraseSalida(Drink drink)
         {
-            String result;
-            result = String.Format("You have ordered a {0}", drinkType.ToLower());
+            string result;
+            result = string.Format("You have ordered a {0}", drink.DrinkType.ToLower());
 
-            if (extraHot > 0)
+            if (drink.ExtraHot > 0)
             {
                 result += " extra hot";
             }
 
-            if (sugars > 0)
+            if (drink.Sugars > 0)
             {
-                result += String.Format(" with {0} sugars(stick included).", sugars);
+                result += string.Format(" with {0} sugars(stick included).", drink.Sugars);
             }
 
             return result;
@@ -84,13 +84,17 @@
 
         private bool ComprobarQueHayaSuficienteDinero(string drinkType, float money)
         {
-            return money >= drinkPrices.Where(x => x.Name.ToLower() == drinkType.ToLower()).Single().Price;
+            return money >= this.drinkPrices.Single(x => x.Name.ToLower() == drinkType.ToLower()).Price;
         }
 
         private bool ComprobarQueExisteBebida(string drinkType)
         {
-            if (drinkType == null) return false;
-            return drinkPrices.Where(x => x.Name.ToLower() == drinkType.ToLower()).Any();
+            if (drinkType == null)
+            {
+                return false;
+            }
+
+            return this.drinkPrices.Any(x => x.Name.ToLower() == drinkType.ToLower());
         }
     }
 }

@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\domain\models\models.csproj" />
-    <ProjectReference Include="..\..\domain\services\services.csproj" />
+    <ProjectReference Include="..\..\domain\models\Models.csproj" />
+    <ProjectReference Include="..\..\domain\services\Services.csproj" />
   </ItemGroup>
 
 </Project>
