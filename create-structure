@@ -1,0 +1,38 @@
+#!/bin/bash
+dotnet new sln -n back
+mkdir api
+mkdir domain
+mkdir data
+mkdir tests
+
+cd data
+dotnet new classlib -n entities
+dotnet new classlib -n repositories
+dotnet add repositories reference entities
+dotnet sln ../back.sln add entities
+dotnet sln ../back.sln add repositories
+cd ..
+
+cd domain
+dotnet new classlib -n models
+dotnet new classlib -n services
+dotnet add services reference ../data/repositories
+dotnet add services reference ../data/entities
+dotnet add services reference models
+dotnet sln ../back.sln add models
+dotnet sln ../back.sln add services
+cd ..
+
+cd api
+dotnet new webapi -n webapi
+dotnet add webapi reference ../domain/models
+dotnet add webapi reference ../domain/services
+dotnet sln ../back.sln add webapi
+cd ..
+
+cd tests
+dotnet new classlib -n tests-domain
+dotnet sln ../back.sln add tests-domain
+cd ..
+
+code .
