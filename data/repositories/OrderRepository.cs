@@ -39,5 +39,12 @@
         //         };
         //     return resultado;
         // }
+
+        public void Add(Order order)
+        {
+            using var dbContext = new WebApiContext();
+            dbContext.Orders.Add(order);
+            dbContext.SaveChanges();
+        }
     }
 }

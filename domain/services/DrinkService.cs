@@ -3,13 +3,15 @@
     using Models;
     using Repositories;
     using System.Collections.Generic;
+    using System.Collections.Immutable;
     using System.Globalization;
     using System.Linq;
 
     // TODO: Quitar magic strings
+
     public class DrinkService
     {
-        private readonly List<DrinkPrice> drinkPrices = new List<DrinkPrice>
+        public readonly ImmutableArray<DrinkPrice> drinkPrices = new ImmutableArray<DrinkPrice>
         {
             new DrinkPrice { Price = 0.4F, Name = "Tea" },
             new DrinkPrice { Price = 0.5F, Name = "Coffee" },
