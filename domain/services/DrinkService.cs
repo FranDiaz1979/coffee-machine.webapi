@@ -122,6 +122,7 @@
             var drink = new Drink
             {
                 DrinkType = order.DrinkType,
+                Money = this.DrinkPrices.Single(x => x.Name.ToLower() == order.DrinkType.ToLower()).Price,
                 Sugars = order.Sugars,
                 ExtraHot = order.ExtraHot,
             };
