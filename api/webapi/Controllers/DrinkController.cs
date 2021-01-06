@@ -10,11 +10,11 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class DrinkController : ControllerBase
     {
-        private readonly ILogger<DrinkController> _logger;
+        private readonly ILogger<DrinkController> log;
 
         public DrinkController(ILogger<DrinkController> logger)
         {
-            this._logger = logger;
+            this.log = logger;
         }
 
         [HttpGet]
@@ -37,6 +37,7 @@ namespace WebApi.Controllers
                 ExtraHot = extraHot,
             };
             var result = drinkService.Pedir(drink);
+            this.log.LogDebug(System.Reflection.MethodBase.GetCurrentMethod().Name + " executed");
             return result;
         }
     }

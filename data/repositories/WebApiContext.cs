@@ -1,6 +1,5 @@
 ﻿namespace Repositories
 {
-    using System;
     using Entities;
     using Microsoft.EntityFrameworkCore;
 
@@ -9,16 +8,16 @@
         private readonly string connectionString = "SERVER=localhost; DATABASE=aboTest ; UID=root; PASSWORD=QsB3N09NCfeaJ48mn6Su;";
         public DbSet<Order> Orders { get; set; }
 
-        public override void Dispose()
-        {
-            ////base.Dispose();
-        }
+        ////public override void Dispose()
+        ////{
+        ////    ////base.Dispose();
+        ////}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             try
             {
-                optionsBuilder.UseMySQL(connectionString);
+                optionsBuilder.UseMySQL(this.connectionString);
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

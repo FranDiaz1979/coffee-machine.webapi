@@ -7,12 +7,8 @@
     using System.Globalization;
     using System.Linq;
 
-    // TODO: Quitar magic strings
-
     public class DrinkService
     {
-        public IEnumerable<DrinkPrice> DrinkPrices { get; }
-
         private readonly IEnumerable<DrinkPrice> drinkPrices = new List<DrinkPrice>
         {
             new DrinkPrice { Price = 0.4F, Name = Resources.Tea },
@@ -22,8 +18,10 @@
 
         public DrinkService()
         {
-            DrinkPrices = this.drinkPrices;
+            this.DrinkPrices = this.drinkPrices;
         }
+
+        public IEnumerable<DrinkPrice> DrinkPrices { get; }
 
         public IEnumerable<Drink> ReadAll()
         {

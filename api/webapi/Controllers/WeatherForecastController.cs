@@ -15,17 +15,18 @@
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<WeatherForecastController> log;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
-            this._logger = logger;
+            this.log = logger;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
+            this.log.LogDebug("WeatherForecast.Get ejecutado");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
