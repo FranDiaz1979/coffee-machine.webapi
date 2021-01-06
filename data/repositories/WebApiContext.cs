@@ -5,13 +5,12 @@
 
     public class WebApiContext : DbContext
     {
-        private readonly string connectionString = "SERVER=localhost; DATABASE=aboTest ; UID=root; PASSWORD=QsB3N09NCfeaJ48mn6Su;";
-        public DbSet<Order> Orders { get; set; }
+        private readonly string connectionString = "SERVER=192.168.1.138; PORT=3305; DATABASE=coffee_machine ; UID=coffee_machine; PASSWORD=coffee_machine;";
+        public virtual DbSet<Order> Orders { get; set; }
 
-        ////public override void Dispose()
-        ////{
-        ////    ////base.Dispose();
-        ////}
+        public override void Dispose()
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,6 +30,29 @@
                         throw new MyDataBaseException(ex.Number + ". " + ex.Message, ex);
                 }
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>(entity =>
+            {
+                //entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.DrinkType)
+                    .HasColumnName("drink_type")
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Sugars)
+                    .IsRequired();
+
+                entity.Property(e => e.Stick);
+
+                entity.Property(e => e.ExtraHot);
+            });
         }
     }
 }

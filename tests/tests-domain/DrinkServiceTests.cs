@@ -1,6 +1,6 @@
 ﻿// TODO: Hacer mocks de capa servicio
 
-namespace DomainTests
+namespace Tests
 {
     using Models;
     using NUnit.Framework;
@@ -193,6 +193,14 @@ namespace DomainTests
 
             // Assert
             Assert.AreEqual(string.Format("You have ordered a {0} extra hot with {1} sugars(stick included).", drink.DrinkType.ToLower(), drink.Sugars), resultado);
+        }
+
+        [Test]
+        public void DrinkServiceReadAll()
+        {
+            var drinkService = new DrinkService();
+            var resultado = drinkService.ReadAll();
+            Assert.IsNotNull(resultado.FirstOrDefault());
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using Models;
     using Repositories;
+    using Entities;
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Globalization;
@@ -32,8 +33,8 @@
             {
                 var drink = new Drink
                 {
-                    DrinkType = this.DrinkPrices.Single(x => x.Name == order.DrinkType).Name,
-                    Money = this.DrinkPrices.Single(x => x.Name == order.DrinkType).Price,
+                    DrinkType = this.DrinkPrices.Single(x => x.Name.ToLower() == order.DrinkType.ToLower()).Name,
+                    Money = this.DrinkPrices.Single(x => x.Name.ToLower() == order.DrinkType.ToLower()).Price,
                     Sugars = order.Sugars,
                     ExtraHot = order.ExtraHot,
                 };
@@ -61,7 +62,15 @@
                 return Resources.ErrorNumberOfSugars;
             }
 
-            //// TODO: OrderRepository.Add(...);
+            var order = new Order
+            {
+                DrinkType = drink.DrinkType,
+                Sugars = drink.Sugars,
+                Stick = drink.Stick,
+                ExtraHot = drink.ExtraHot,
+            };
+
+            OrderRepository.Add(order);
 
             return GenerarFraseSalida(drink);
         }
