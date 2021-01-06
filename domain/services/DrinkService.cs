@@ -11,12 +11,19 @@
 
     public class DrinkService
     {
-        public readonly ImmutableArray<DrinkPrice> drinkPrices = new ImmutableArray<DrinkPrice>
+        public IEnumerable<DrinkPrice> DrinkPrices { get; }
+
+        private readonly IEnumerable<DrinkPrice> drinkPrices = new List<DrinkPrice>
         {
-            new DrinkPrice { Price = 0.4F, Name = "Tea" },
-            new DrinkPrice { Price = 0.5F, Name = "Coffee" },
-            new DrinkPrice { Price = 0.6F, Name = "Chocolate" },
+            new DrinkPrice { Price = 0.4F, Name = Resources.Tea },
+            new DrinkPrice { Price = 0.5F, Name = Resources.Coffee },
+            new DrinkPrice { Price = 0.6F, Name = Resources.Chocolate },
         };
+
+        public DrinkService()
+        {
+            DrinkPrices = this.drinkPrices;
+        }
 
         public IEnumerable<Drink> ReadAll()
         {
@@ -27,8 +34,8 @@
             {
                 var drink = new Drink
                 {
-                    DrinkType = this.drinkPrices.Single(x => x.Name == order.DrinkType).Name,
-                    Money = this.drinkPrices.Single(x => x.Name == order.DrinkType).Price,
+                    DrinkType = this.DrinkPrices.Single(x => x.Name == order.DrinkType).Name,
+                    Money = this.DrinkPrices.Single(x => x.Name == order.DrinkType).Price,
                     Sugars = order.Sugars,
                     ExtraHot = order.ExtraHot,
                 };
@@ -40,20 +47,20 @@
         {
             if (!this.ComprobarQueExisteBebida(drink.DrinkType))
             {
-                return "The drink type should be tea, coffee or chocolate.";
+                return Resources.ErrorDrinkNotExist;
             }
 
             if (!this.ComprobarQueHayaSuficienteDinero(drink.DrinkType, drink.Money))
             {
                 return string.Format(
-                    "The {0} costs {1}.",
-                    this.drinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Name,
-                    this.drinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Price.ToString("N", new CultureInfo("en-US")));
+                    Resources.ErrorMoneyNotEnought,
+                    this.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Name,
+                    this.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Price.ToString("N", new CultureInfo("en-US")));
             }
 
             if (!ComprobarAzucarillos(drink.Sugars))
             {
-                return "The number of sugars should be between 0 and 2.";
+                return Resources.ErrorNumberOfSugars;
             }
 
             //// TODO: OrderRepository.Add(...);
@@ -64,16 +71,16 @@
         private static string GenerarFraseSalida(Drink drink)
         {
             string result;
-            result = string.Format("You have ordered a {0}", drink.DrinkType.ToLower());
+            result = string.Format(Resources.MessageOrdered, drink.DrinkType.ToLower());
 
             if (drink.ExtraHot > 0)
             {
-                result += " extra hot";
+                result += " " + Resources.MessageExtraHot;
             }
 
             if (drink.Sugars > 0)
             {
-                result += string.Format(" with {0} sugars(stick included).", drink.Sugars);
+                result += " " + string.Format(Resources.MessageWithSugars, drink.Sugars);
             }
 
             return result;
@@ -86,7 +93,7 @@
 
         private bool ComprobarQueHayaSuficienteDinero(string drinkType, float money)
         {
-            return money >= this.drinkPrices.Single(x => x.Name.ToLower() == drinkType.ToLower()).Price;
+            return money >= this.DrinkPrices.Single(x => x.Name.ToLower() == drinkType.ToLower()).Price;
         }
 
         private bool ComprobarQueExisteBebida(string drinkType)
@@ -96,7 +103,7 @@
                 return false;
             }
 
-            return this.drinkPrices.Any(x => x.Name.ToLower() == drinkType.ToLower());
+            return this.DrinkPrices.Any(x => x.Name.ToLower() == drinkType.ToLower());
         }
     }
 }

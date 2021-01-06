@@ -1,15 +1,19 @@
 namespace Entities
 {
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class Order
     {
         public int Id { get; }
 
+        [Column("drink_type")]
         public string DrinkType { get; set; }
 
         public int Sugars { get; set; }
 
         public bool Stick { get; set; }
 
+        [Column("extra_hot")]
         public int ExtraHot { get; set; }
     }
 }

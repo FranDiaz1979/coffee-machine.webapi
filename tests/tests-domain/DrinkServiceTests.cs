@@ -107,8 +107,8 @@ namespace DomainTests
             Assert.AreEqual(
                 string.Format(
                     "The {0} costs {1}.",
-                    drinkService.drinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Name,
-                    drinkService.drinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Price.ToString("N", new System.Globalization.CultureInfo("en-US"))
+                    drinkService.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Name,
+                    drinkService.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Price.ToString("N", new System.Globalization.CultureInfo("en-US"))
                 ),
                 resultado
             );
