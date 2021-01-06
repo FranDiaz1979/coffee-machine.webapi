@@ -5,6 +5,7 @@ namespace WebApi.Controllers
     using Models;
     using Services;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     [ApiController]
     [Route("[controller]")]
@@ -18,15 +19,15 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Drink> Get()
+        public async Task<ActionResult<IEnumerable<Drink>>> Get()
         {
             var drinkService = new DrinkService();
-            var result = drinkService.ReadAll();
-            return result;
+            var result = drinkService.ReadAll();            
+            return Ok(result);
         }
 
         [HttpPost]
-        public string Post(string drinkType, float money, int sugars, int extraHot)
+        public async Task<ActionResult<string>> Post(string drinkType, float money, int sugars, int extraHot)
         {
             var drinkService = new DrinkService();
             var drink = new Drink
@@ -36,9 +37,23 @@ namespace WebApi.Controllers
                 Sugars = sugars,
                 ExtraHot = extraHot,
             };
-            var result = drinkService.Pedir(drink);
+            var result = await drinkService.PedirAsync(drink);
             this.log.LogDebug(System.Reflection.MethodBase.GetCurrentMethod().Name + " executed");
-            return result;
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Drink>> GetById(int id)
+        {
+            var drinkService = new DrinkService();
+            var result = await drinkService.GetByIdAsync(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
     }
 }

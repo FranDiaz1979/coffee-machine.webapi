@@ -6,6 +6,7 @@ namespace Tests
     using NUnit.Framework;
     using Services;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class DrinkServiceTests
@@ -15,11 +16,10 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink();
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual("The drink type should be tea, coffee or chocolate.", resultado);
@@ -30,7 +30,6 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink
             {
                 DrinkType = "bebida inventada",
@@ -40,7 +39,7 @@ namespace Tests
             };
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual("The drink type should be tea, coffee or chocolate.", resultado);
@@ -53,7 +52,6 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink
             {
                 DrinkType = drinkType,
@@ -63,7 +61,7 @@ namespace Tests
             };
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual(
@@ -81,7 +79,6 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink
             {
                 DrinkType = drinkType,
@@ -91,7 +88,7 @@ namespace Tests
             };
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual("The number of sugars should be between 0 and 2.", resultado);
@@ -104,7 +101,6 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink
             {
                 DrinkType = drinkType,
@@ -114,7 +110,7 @@ namespace Tests
             };
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual(string.Format("You have ordered a {0}", drink.DrinkType.ToLower()), resultado);
@@ -130,7 +126,6 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink
             {
                 DrinkType = drinkType,
@@ -140,7 +135,7 @@ namespace Tests
             };
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual(string.Format("You have ordered a {0} with {1} sugars(stick included).", drink.DrinkType.ToLower(), drink.Sugars), resultado);
@@ -153,7 +148,6 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink
             {
                 DrinkType = drinkType,
@@ -163,7 +157,7 @@ namespace Tests
             };
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual(string.Format("You have ordered a {0} extra hot", drink.DrinkType.ToLower()), resultado);
@@ -179,7 +173,6 @@ namespace Tests
         {
             // Arrange
             var drinkService = new DrinkService();
-            string resultado;
             var drink = new Drink
             {
                 DrinkType = drinkType,
@@ -189,14 +182,14 @@ namespace Tests
             };
 
             // Act
-            resultado = drinkService.Pedir(drink);
+            string resultado = drinkService.PedirAsync(drink).Result;
 
             // Assert
             Assert.AreEqual(string.Format("You have ordered a {0} extra hot with {1} sugars(stick included).", drink.DrinkType.ToLower(), drink.Sugars), resultado);
         }
 
         [Test]
-        public void DrinkServiceReadAll()
+        public async Task DrinkServiceReadAll()
         {
             var drinkService = new DrinkService();
             var resultado = drinkService.ReadAll();

@@ -7,6 +7,7 @@
     using System.Collections.Immutable;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class DrinkService
     {
@@ -27,8 +28,7 @@
         public IEnumerable<Drink> ReadAll()
         {
             var orderRepository = new OrderRepository();
-            var orders = orderRepository.ReadAll();
-
+            var orders = orderRepository.ReadAllAsync().Result;
             foreach (var order in orders)
             {
                 var drink = new Drink
@@ -42,7 +42,7 @@
             }
         }
 
-        public string Pedir(Drink drink)
+        public async Task<string> PedirAsync(Drink drink)
         {
             if (!this.ComprobarQueExisteBebida(drink.DrinkType))
             {
@@ -62,7 +62,7 @@
                 return Resources.ErrorNumberOfSugars;
             }
 
-            var order = new Order
+            Order order = new Order
             {
                 DrinkType = drink.DrinkType,
                 Sugars = drink.Sugars,
@@ -70,7 +70,8 @@
                 ExtraHot = drink.ExtraHot,
             };
 
-            OrderRepository.Add(order);
+            var orderRepository = new OrderRepository();
+            await orderRepository.AddAsync(order);
 
             return GenerarFraseSalida(drink);
         }
@@ -111,6 +112,20 @@
             }
 
             return this.DrinkPrices.Any(x => x.Name.ToLower() == drinkType.ToLower());
+        }
+
+        public async Task<Drink> GetByIdAsync(int id)
+        {
+            var orderRepository = new OrderRepository();
+            var order = await orderRepository.GetByIdAsync(id);
+
+            var drink = new Drink
+            {
+                DrinkType = order.DrinkType,
+                Sugars = order.Sugars,
+                ExtraHot = order.ExtraHot,
+            };
+            return drink;
         }
     }
 }

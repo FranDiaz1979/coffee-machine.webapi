@@ -1,7 +1,9 @@
 ﻿namespace Repositories
 {
     using Entities;
+    using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class OrderRepository
     {
@@ -28,17 +30,23 @@
         //    return resultado;
         //}
 
-        public IEnumerable<Order> ReadAll()
+        public async Task<IEnumerable<Order>> ReadAllAsync()
         {
             using var dbContext = new WebApiContext();
             return dbContext.Orders;
         }
 
-        public static void Add(Order order)
+        public async Task AddAsync(Order order)
         {
             using var dbContext = new WebApiContext();
-            dbContext.Orders.Add(order);
-            dbContext.SaveChanges();
+            await dbContext.Orders.AddAsync(order);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Order> GetByIdAsync(int id)
+        {
+            using var dbContext = new WebApiContext();
+            return await dbContext.Orders.FindAsync(id);
         }
     }
 }
