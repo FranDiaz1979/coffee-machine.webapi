@@ -25,11 +25,11 @@
                 switch (ex.Number)
                 {
                     case 0:
-                        throw new Exception("Cannot connect to server.  Contact administrator");
+                        throw new MyDataBaseException("Cannot connect to server.  Contact administrator", ex);
                     case 1045:
-                        throw new Exception("Invalid username/password, please try again");
+                        throw new MyDataBaseException("Invalid username/password, please try again", ex);
                     default:
-                        throw new Exception(ex.Number + ". " + ex.Message);
+                        throw new MyDataBaseException(ex.Number + ". " + ex.Message, ex);
                 }
             }
         }
