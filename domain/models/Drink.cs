@@ -14,7 +14,7 @@ namespace Models
         {
             get
             {
-                return Sugars > 0 ? 1 : 0;
+                return this.Sugars > 0 ? 1 : 0;
             }
         }
     }

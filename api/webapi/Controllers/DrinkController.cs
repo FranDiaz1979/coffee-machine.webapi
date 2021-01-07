@@ -19,11 +19,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Drink>>> Get()
+        public ActionResult<IEnumerable<Drink>> Get()
         {
             var drinkService = new DrinkService();
-            var result = drinkService.ReadAll();            
-            return Ok(result);
+            var result = drinkService.ReadAll();
+            return this.Ok(result);
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace WebApi.Controllers
             };
             var result = await drinkService.PedirAsync(drink);
             this.log.LogDebug(System.Reflection.MethodBase.GetCurrentMethod().Name + " executed");
-            return Ok(result);
+            return this.Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -50,10 +50,10 @@ namespace WebApi.Controllers
 
             if (result == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return Ok(result);
+            return this.Ok(result);
         }
     }
 }

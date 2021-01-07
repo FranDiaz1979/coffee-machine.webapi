@@ -10,6 +10,7 @@
 
         public override void Dispose()
         {
+            // Evita que haga un dispose antes de tiempo
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,8 +37,6 @@
         {
             modelBuilder.Entity<Order>(entity =>
             {
-                //entity.HasKey(e => e.Id);
-
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever();
 

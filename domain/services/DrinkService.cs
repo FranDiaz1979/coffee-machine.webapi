@@ -1,10 +1,9 @@
 ﻿namespace Services
 {
+    using Entities;
     using Models;
     using Repositories;
-    using Entities;
     using System.Collections.Generic;
-    using System.Collections.Immutable;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
@@ -28,7 +27,7 @@
         public IEnumerable<Drink> ReadAll()
         {
             var orderRepository = new OrderRepository();
-            var orders = orderRepository.ReadAllAsync().Result;
+            var orders = orderRepository.ReadAll();
             foreach (var order in orders)
             {
                 var drink = new Drink
@@ -40,6 +39,21 @@
                 };
                 yield return drink;
             }
+        }
+
+        public async Task<Drink> GetByIdAsync(int id)
+        {
+            var orderRepository = new OrderRepository();
+            var order = await orderRepository.GetByIdAsync(id);
+
+            var drink = new Drink
+            {
+                DrinkType = order.DrinkType,
+                Money = this.DrinkPrices.Single(x => x.Name.ToLower() == order.DrinkType.ToLower()).Price,
+                Sugars = order.Sugars,
+                ExtraHot = order.ExtraHot,
+            };
+            return drink;
         }
 
         public async Task<string> PedirAsync(Drink drink)
@@ -112,21 +126,6 @@
             }
 
             return this.DrinkPrices.Any(x => x.Name.ToLower() == drinkType.ToLower());
-        }
-
-        public async Task<Drink> GetByIdAsync(int id)
-        {
-            var orderRepository = new OrderRepository();
-            var order = await orderRepository.GetByIdAsync(id);
-
-            var drink = new Drink
-            {
-                DrinkType = order.DrinkType,
-                Money = this.DrinkPrices.Single(x => x.Name.ToLower() == order.DrinkType.ToLower()).Price,
-                Sugars = order.Sugars,
-                ExtraHot = order.ExtraHot,
-            };
-            return drink;
         }
     }
 }

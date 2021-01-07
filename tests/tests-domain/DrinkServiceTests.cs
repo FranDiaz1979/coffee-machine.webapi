@@ -6,7 +6,6 @@ namespace Tests
     using NUnit.Framework;
     using Services;
     using System.Linq;
-    using System.Threading.Tasks;
 
     [TestFixture]
     public class DrinkServiceTests
@@ -189,7 +188,7 @@ namespace Tests
         }
 
         [Test]
-        public async Task DrinkServiceReadAll()
+        public void DrinkServiceReadAll()
         {
             var drinkService = new DrinkService();
             var resultado = drinkService.ReadAll();
