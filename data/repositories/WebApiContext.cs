@@ -5,7 +5,7 @@
 
     public class WebApiContext : DbContext
     {
-        private readonly string connectionString = "SERVER=192.168.1.138; PORT=3305; DATABASE=coffee_machine ; UID=coffee_machine; PASSWORD=coffee_machine;";
+        private readonly string connectionString = "SERVER=81.46.243.11; PORT=3305; DATABASE=coffee_machine ; UID=coffee_machine; PASSWORD=********;";
         public virtual DbSet<Order> Orders { get; set; }
 
         public override void Dispose()
