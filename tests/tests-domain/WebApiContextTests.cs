@@ -8,7 +8,7 @@
     internal class WebApiContextTests
     {
         [Test]
-        public void ProbarContexto()
+        public void TryContext()
         {
             using var context = new WebApiContext();
             var result = context.Orders.First();

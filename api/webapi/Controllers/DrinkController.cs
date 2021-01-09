@@ -29,7 +29,7 @@ namespace WebApi.Controllers
             }
             catch (System.Exception exception)
             {
-                log.LogError(exception, string.Format("{0}: Error en {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                log.LogError(exception, string.Format("{0}: Error in {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
                 return this.StatusCode(500);
             }
         }
@@ -47,7 +47,7 @@ namespace WebApi.Controllers
                     Sugars = sugars,
                     ExtraHot = extraHot,
                 };
-                var result = await drinkService.PedirAsync(drink);
+                var result = await drinkService.OrderAsync(drink);
                 this.log.LogDebug(string.Format("{0}: {1} executed", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
                 return this.Ok(result);
             }
@@ -58,7 +58,7 @@ namespace WebApi.Controllers
             }
             catch (System.Exception exception)
             {
-                log.LogError(exception, string.Format("{0}: Error en {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                log.LogError(exception, string.Format("{0}: Error in {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
                 return this.StatusCode(500);
             }
         }
@@ -80,7 +80,7 @@ namespace WebApi.Controllers
             }
             catch (System.Exception exception)
             {
-                log.LogError(exception, string.Format("{0}: Error en {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                log.LogError(exception, string.Format("{0}: Error in {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
                 return this.StatusCode(500);
             }
         }

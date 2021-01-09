@@ -56,7 +56,7 @@
             return drink;
         }
 
-        public async Task<string> PedirAsync(Drink drink)
+        public async Task<string> OrderAsync(Drink drink)
         {
             if (!this.ComprobarQueExisteBebida(drink.DrinkType))
             {
