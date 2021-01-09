@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> Post(string drinkType, float money, int sugars, int extraHot)
+        public async Task<ActionResult<string>> Post(string drinkType, double money, int sugars, int extraHot)
         {
             try
             {

@@ -3,6 +3,7 @@
     using Entities;
     using Models;
     using Repositories;
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -58,12 +59,12 @@
 
         public async Task<string> OrderAsync(Drink drink)
         {
-            if (!this.ComprobarQueExisteBebida(drink.DrinkType))
+            if (!this.CheckDrinkExists(drink.DrinkType))
             {
                 throw new BadParametersException(Resources.ErrorDrinkNotExist);
             }
 
-            if (!this.ComprobarQueHayaSuficienteDinero(drink.DrinkType, drink.Money))
+            if (!this.CheckMoneyIsEnought(drink.DrinkType, drink.Money))
             {
                 string exceptionMessage = string.Format(
                     Resources.ErrorMoneyNotEnought,
@@ -72,14 +73,14 @@
                 throw new BadParametersException(exceptionMessage);
             }
 
-            if (!ComprobarAzucarillos(drink.Sugars))
+            if (!CheckSugars(drink.Sugars))
             {
                 throw new BadParametersException(Resources.ErrorNumberOfSugars);
             }
 
             Order order = new Order
             {
-                DrinkType = drink.DrinkType,
+                DrinkType = drink.DrinkType.ToLower(),
                 Sugars = drink.Sugars,
                 Stick = drink.Stick,
                 ExtraHot = drink.ExtraHot,
@@ -88,10 +89,10 @@
             var orderRepository = new OrderRepository();
             await orderRepository.AddAsync(order);
 
-            return GenerarFraseSalida(drink);
+            return GenerateResultPhrase(drink);
         }
 
-        private static string GenerarFraseSalida(Drink drink)
+        private static string GenerateResultPhrase(Drink drink)
         {
             string result;
             result = string.Format(Resources.MessageOrdered, drink.DrinkType.ToLower());
@@ -109,17 +110,17 @@
             return result;
         }
 
-        private static bool ComprobarAzucarillos(int sugars)
+        private static bool CheckSugars(int sugars)
         {
             return sugars >= 0 && sugars <= 2;
         }
 
-        private bool ComprobarQueHayaSuficienteDinero(string drinkType, float money)
+        private bool CheckMoneyIsEnought(string drinkType, double money)
         {
             return money >= this.DrinkPrices.Single(x => x.Name.ToLower() == drinkType.ToLower()).Price;
         }
 
-        private bool ComprobarQueExisteBebida(string drinkType)
+        private bool CheckDrinkExists(string drinkType)
         {
             if (drinkType == null)
             {
