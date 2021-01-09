@@ -15,6 +15,7 @@ Tiene el siguiente stack técnico:
 	Buenas prácticas: Principios SOLID, CLEAN CODE y Refactoring
 	MySql
 	contenedores Docker
+	Asincronía (Sync/Await)
 	Linux Server
 	Como herramientas para buscar code smells he usado CodeMaid, SonarQube y StileCop
 
@@ -55,16 +56,19 @@ Como probar la api:
 	
 	En ambos casos la ruta de la api es https://localhost:5001/drink, y ha de estar el contenedor de mysql levantado
 	
+Explicación de por qué hago try's en los tests
+
+	Me parece mucho más elegante usar un try en el test que no usar 2 metodos distintos, 1 de ellos un delegate
 Falta:
 	En los unit test faltan mocks, separar unit tests de tests de integracion.
-	En el metodo POST se pasan los parametros como GET (y queda feo) y no se usa ningun DTO para especificar los parametros.
-	Contestar con un status code cuando hay un error.
-	Quitar nombres en castellano.
 	Hacer servir injeccion de dependencias y quitar new's
-	Si pones como precio 0,499999999999 te deja comprar.
 	En la capa Dominio he llamado al "modelo" Drink y en la capa datos Order para diferenciarlas, pero he de añadirles una coletilla al nombre para que el proyecto escale sin problemas. 
 	Para Linux se puede hacer un bundle con todos los contenedores.
-	
+	¿Hacerlo multiidioma?
+
+Feedback: En el metodo POST se pasan los parametros como GET (y queda feo) y no se usa ningun DTO para especificar los parametros.
+Explicación: Si se pasa un objeto para pasar parametros, swagger deja de mostrar la lista de parametros a rellenar.
+
 	
 (El problema planteado al completo esta en la carpeta documentación, y venía en un bundle con un front de 3 contenedores docker)
 

@@ -5,23 +5,25 @@ namespace Tests
     using Models;
     using NUnit.Framework;
     using Services;
+    using System;
     using System.Linq;
 
     [TestFixture]
     public class DrinkServiceTests
     {
         [Test]
-        public void DrinkService_Order_DrinkWithoutData()
+        public void DrinkService_Order_DrinkWithoutData_2()
         {
             // Arrange
             var drinkService = new DrinkService();
             var drink = new Drink();
 
             // Act
-            string result = drinkService.OrderAsync(drink).Result;
+            BadParametersException exception = Assert.Throws<BadParametersException>(
+                 delegate { drinkService.OrderAsync(drink).GetAwaiter().GetResult(); });
 
             // Assert
-            Assert.AreEqual("The drink type should be tea, coffee or chocolate.", result);
+            Assert.That(exception.Message, Is.EqualTo("The drink type should be tea, coffee or chocolate."));
         }
 
         [Test]
@@ -38,10 +40,11 @@ namespace Tests
             };
 
             // Act
-            string result = drinkService.OrderAsync(drink).Result;
+            BadParametersException exception = Assert.Throws<BadParametersException>(
+                delegate { drinkService.OrderAsync(drink).GetAwaiter().GetResult(); });
 
             // Assert
-            Assert.AreEqual("The drink type should be tea, coffee or chocolate.", result);
+            Assert.AreEqual("The drink type should be tea, coffee or chocolate.", exception.Message);
         }
 
         [TestCase("TEA", 0.39F, 1, 1)]
@@ -60,7 +63,8 @@ namespace Tests
             };
 
             // Act
-            string result = drinkService.OrderAsync(drink).Result;
+            BadParametersException exception = Assert.Throws<BadParametersException>(
+                 delegate { drinkService.OrderAsync(drink).GetAwaiter().GetResult(); });
 
             // Assert
             Assert.AreEqual(
@@ -68,12 +72,12 @@ namespace Tests
                     "The {0} costs {1}.",
                     drinkService.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Name,
                     drinkService.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Price.ToString("N", new System.Globalization.CultureInfo("en-US"))),
-                result);
+                exception.Message);
         }
 
-        [TestCase("COFFEE", 1F, -1, 1)]
-        [TestCase("TEA", 1F, 4, 1)]
-        [TestCase("CHOCOLATE", 1F, 2000, 1)]
+        [TestCase("COFFEE", 1, -1, 1)]
+        [TestCase("TEA", 1, 4, 1)]
+        [TestCase("CHOCOLATE", 1, 2000, 1)]
         public void DrinkService_Order_BadNumberSugars(string drinkType, float money, int sugars, int extraHot)
         {
             // Arrange
@@ -87,10 +91,11 @@ namespace Tests
             };
 
             // Act
-            string result = drinkService.OrderAsync(drink).Result;
+            BadParametersException exception = Assert.Throws<BadParametersException>(
+                 delegate { drinkService.OrderAsync(drink).GetAwaiter().GetResult(); });
 
             // Assert
-            Assert.AreEqual("The number of sugars should be between 0 and 2.", result);
+            Assert.AreEqual("The number of sugars should be between 0 and 2.", exception.Message);
         }
 
         [TestCase("COFFEE", 1F, 0, 0)]
