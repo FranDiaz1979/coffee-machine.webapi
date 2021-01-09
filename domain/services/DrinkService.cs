@@ -60,20 +60,21 @@
         {
             if (!this.ComprobarQueExisteBebida(drink.DrinkType))
             {
-                return Resources.ErrorDrinkNotExist;
+                throw new BadParametersException(Resources.ErrorDrinkNotExist);
             }
 
             if (!this.ComprobarQueHayaSuficienteDinero(drink.DrinkType, drink.Money))
             {
-                return string.Format(
+                string exceptionMessage = string.Format(
                     Resources.ErrorMoneyNotEnought,
                     this.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Name,
                     this.DrinkPrices.Single(x => x.Name.ToLower() == drink.DrinkType.ToLower()).Price.ToString("N", new CultureInfo("en-US")));
+                throw new BadParametersException(exceptionMessage);
             }
 
             if (!ComprobarAzucarillos(drink.Sugars))
             {
-                return Resources.ErrorNumberOfSugars;
+                throw new BadParametersException(Resources.ErrorNumberOfSugars);
             }
 
             Order order = new Order

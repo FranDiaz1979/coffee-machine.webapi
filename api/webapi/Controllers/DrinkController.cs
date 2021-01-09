@@ -21,39 +21,68 @@ namespace WebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Drink>> Get()
         {
-            var drinkService = new DrinkService();
-            var result = drinkService.ReadAll();
-            return this.Ok(result);
+            try
+            {
+                var drinkService = new DrinkService();
+                var result = drinkService.ReadAll();
+                return this.Ok(result);
+            }
+            catch (System.Exception exception)
+            {
+                log.LogError(exception, string.Format("{0}: Error en {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                return this.StatusCode(500);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult<string>> Post(string drinkType, float money, int sugars, int extraHot)
         {
-            var drinkService = new DrinkService();
-            var drink = new Drink
+            try
             {
-                DrinkType = drinkType,
-                Money = money,
-                Sugars = sugars,
-                ExtraHot = extraHot,
-            };
-            var result = await drinkService.PedirAsync(drink);
-            this.log.LogDebug(System.Reflection.MethodBase.GetCurrentMethod().Name + " executed");
-            return this.Ok(result);
+                var drinkService = new DrinkService();
+                var drink = new Drink
+                {
+                    DrinkType = drinkType,
+                    Money = money,
+                    Sugars = sugars,
+                    ExtraHot = extraHot,
+                };
+                var result = await drinkService.PedirAsync(drink);
+                this.log.LogDebug(string.Format("{0}: {1} executed", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                return this.Ok(result);
+            }
+            catch (Services.BadParametersException exception)
+            {
+                log.LogInformation(string.Format("{0}: {1}", System.DateTime.Now, exception.Message));
+                return this.StatusCode(400, exception.Message);
+            }
+            catch (System.Exception exception)
+            {
+                log.LogError(exception, string.Format("{0}: Error en {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                return this.StatusCode(500);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Drink>> GetById(int id)
         {
-            var drinkService = new DrinkService();
-            var result = await drinkService.GetByIdAsync(id);
-
-            if (result == null)
+            try
             {
-                return this.NotFound();
-            }
+                var drinkService = new DrinkService();
+                var result = await drinkService.GetByIdAsync(id);
 
-            return this.Ok(result);
+                if (result == null)
+                {
+                    return this.NotFound();
+                }
+
+                return this.Ok(result);
+            }
+            catch (System.Exception exception)
+            {
+                log.LogError(exception, string.Format("{0}: Error en {1}", System.DateTime.Now, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                return this.StatusCode(500);
+            }
         }
     }
 }
