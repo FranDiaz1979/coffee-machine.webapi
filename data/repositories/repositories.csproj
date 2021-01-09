@@ -15,6 +15,30 @@
     <ProjectReference Include="..\entities\Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="MySqlSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MySqlSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="SecretsVaultSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SecretsVaultSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MySqlSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>MySqlSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="SecretsVaultSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>SecretsVaultSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>

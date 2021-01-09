@@ -5,7 +5,14 @@
 
     public class WebApiContext : DbContext
     {
-        private readonly string connectionString = "SERVER=81.46.243.11; PORT=3305; DATABASE=coffee_machine ; UID=coffee_machine; PASSWORD=********;";
+        private readonly string connectionString = string.Format(
+            "SERVER={0}; PORT={1}; DATABASE={2}; UID={3}; PASSWORD={4};",
+            MySqlSettings.Default.Server,
+            MySqlSettings.Default.Port,
+            MySqlSettings.Default.Database,
+            MySqlSettings.Default.UId,
+            SecretsVaultSettings.Default.Password);
+
         public virtual DbSet<Order> Orders { get; set; }
 
         public override void Dispose()

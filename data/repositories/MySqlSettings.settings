@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Repositories" GeneratedClassName="MySqlSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Server" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">81.46.243.11</Value>
+    </Setting>
+    <Setting Name="Port" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">3305</Value>
+    </Setting>
+    <Setting Name="Database" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">coffee_machine</Value>
+    </Setting>
+    <Setting Name="UId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">coffee_machine</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
